@@ -30,9 +30,12 @@ async fn main() {
     );
 
     let database_url =
-        "postgres://postgres:firefox@localhost/chatbot_db";
+        std::env::var("DATABASE_URL")
+        .expect("DATABASE_URL not found");
 
-    let pool = PgPool::connect(database_url)
+    println!("Using DB: {}", database_url);
+
+    let pool = PgPool::connect(&database_url)
         .await
         .unwrap();
 
